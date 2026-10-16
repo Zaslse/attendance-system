@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f766e" />
+  <title>نظام تسجيل الحضور</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="الرئيسية">
+        <span class="app-mark" aria-hidden="true">ح</span>
+        <span class="brand-copy">
+          <strong>سجل الحضور</strong>
+          <small>تسجيل الحضور والغياب</small>
+        </span>
+      </a>
+    </header>
+
+    <main class="main-grid">
+      <section class="hero-panel">
+        <div class="hero-badge">نموذج الحضور اليومي</div>
+        <h1>تسجيل الحضور<br><span>بسهولة ودقة.</span></h1>
+        <p>أدخل بيانات الحصة وعدد الحاضرات والغائبات. عند وجود غياب ستظهر خانات الأسماء تلقائيًا ولن يقبل النموذج إلا بعد اكتمالها.</p>
+        <div class="hero-stats">
+          <div><strong>01</strong><span>بيانات الحصة</span></div>
+          <div><strong>02</strong><span>الحضور والغياب</span></div>
+          <div><strong>03</strong><span>إرسال السجل</span></div>
+        </div>
+        <div class="identity-shape shape-one"></div>
+        <div class="identity-shape shape-two"></div>
+      </section>
+
+      <section class="form-card" aria-labelledby="form-title">
+        <div class="section-heading">
+          <span class="eyebrow">بيانات الحصة</span>
+          <h2 id="form-title">نموذج الحضور والغياب</h2>
+          <p>يرجى تعبئة جميع البيانات المطلوبة قبل الإرسال.</p>
+        </div>
+
+        <form id="attendanceForm" novalidate>
+          <div class="field">
+            <label for="teacherName">اسم المدرس / المعلم</label>
+            <input id="teacherName" name="teacherName" type="text" placeholder="مثال: أ. محمد أحمد" autocomplete="name" required />
+            <span class="field-error" id="teacherNameError"></span>
+          </div>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="sectionName">اسم الشعبة</label>
+              <input id="sectionName" name="sectionName" type="text" placeholder="مثال: 3 / أ" required />
+              <span class="field-error" id="sectionNameError"></span>
+            </div>
+            <div class="field">
+              <label for="courseName">اسم المقرر</label>
+              <input id="courseName" name="courseName" type="text" placeholder="مثال: الرياضيات" required />
+              <span class="field-error" id="courseNameError"></span>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="attendanceDate">التاريخ</label>
+              <input id="attendanceDate" name="attendanceDate" type="date" required />
+              <span class="field-error" id="attendanceDateError"></span>
+            </div>
+            <div class="field">
+              <label for="lessonNumber">رقم الحصة</label>
+              <div class="number-input-wrap">
+                <input id="lessonNumber" name="lessonNumber" type="number" min="1" step="1" inputmode="numeric" placeholder="مثال: 3" required />
+                <span>حصة</span>
+              </div>
+              <span class="field-error" id="lessonNumberError"></span>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="presentCount">عدد الطالبات الحاضرات</label>
+              <div class="number-input-wrap">
+                <input id="presentCount" name="presentCount" type="number" min="0" step="1" inputmode="numeric" placeholder="0" required />
+                <span>طالبة</span>
+              </div>
+              <span class="field-error" id="presentCountError"></span>
+            </div>
+            <div class="field">
+              <label for="absentCount">عدد الطالبات الغائبات</label>
+              <div class="number-input-wrap">
+                <input id="absentCount" name="absentCount" type="number" min="0" step="1" inputmode="numeric" placeholder="0" required />
+                <span>طالبة</span>
+              </div>
+              <span class="field-error" id="absentCountError"></span>
+            </div>
+          </div>
+
+          <div id="absenteesSection" class="absentees-section is-hidden" aria-live="polite">
+            <div class="absentees-header">
+              <div>
+                <span class="eyebrow">أسماء الغائبات</span>
+                <h3>أدخل أسماء جميع الطالبات الغائبات</h3>
+              </div>
+              <span id="absenteeCounter" class="counter-pill">0 / 0</span>
+            </div>
+            <p class="helper">عدد الأسماء يجب أن يطابق عدد الطالبات الغائبات تمامًا.</p>
+            <div id="absenteeInputs" class="absentee-list"></div>
+            <span class="field-error" id="absenteesError"></span>
+          </div>
+
+          <div class="summary-strip">
+            <div>
+              <span>إجمالي الطالبات</span>
+              <strong id="totalStudents">0</strong>
+            </div>
+            <div class="summary-divider"></div>
+            <div>
+              <span>حالة النموذج</span>
+              <strong id="formStatus" class="status-pending">بانتظار الاكتمال</strong>
+            </div>
+          </div>
+
+          <button id="submitBtn" class="primary-btn" type="submit">
+            <span>إرسال وتسجيل الحضور</span>
+            <span aria-hidden="true">←</span>
+          </button>
+          <p class="privacy-note">سيتم حفظ الرد ضمن قائمة سجلات الإدارة.</p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <div id="successToast" class="toast" role="status" aria-live="polite">
+    <span class="toast-icon">✓</span>
+    <div><strong>تم تسجيل الرد بنجاح</strong><small>تمت إضافة السجل إلى لوحة الإدارة.</small></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
